@@ -43,6 +43,10 @@ public class MyListTest extends TestCase{
 		list2.add(1);
 		assertEquals(1, list2.size());
 		assertEquals(1, (int) list2.get(0));
+		
+		MyList addFirst = MyList.asMyList(9);
+		addFirst.addFirst(1);
+		assertEquals(MyList.asMyList(1,9), addFirst);
 	}
 	
 	@Test
@@ -90,11 +94,11 @@ public class MyListTest extends TestCase{
 	
 	public void testSum() {
 		
-		MyList list1 = new MyList("199");
+		MyList list1 = new MyList("9");
 		MyList list2 = new MyList("1");
 		
-		assertEquals(MyList.asMyList(2,0,0), MyList.sum(list1, list2));
-		assertEquals(new MyList("200"), MyList.sum(list1, list2));
+		assertEquals(MyList.asMyList(1,0), MyList.sum(list1, list2));
+		assertEquals(new MyList("10"), MyList.sum(list1, list2));
 	}
 	
 }

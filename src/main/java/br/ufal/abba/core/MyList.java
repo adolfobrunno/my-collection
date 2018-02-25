@@ -191,8 +191,7 @@ public class MyList implements ICollection<Integer> {
 		this.array = aux;
 	}
 
-	public static ICollection<Integer> sum(MyList list1, MyList list2)
-			throws IllegalArgumentException {
+	public static ICollection<Integer> sum(MyList list1, MyList list2) throws IllegalArgumentException {
 		
 		int size1 = list1.size();
 		int size2 = list2.size();
@@ -219,9 +218,12 @@ public class MyList implements ICollection<Integer> {
 			int partial = list1.get(i) + aux + list2.get(i);
 			
 			if(partial > 9) {
-				int up = partial - 10;
-				sum.update(up, i);
+				int diff = partial - 10;
+				sum.update(diff, i);
 				aux = (partial - 9);
+				if(i == 0 && aux > 0) {
+					sum.addFirst(aux);
+				}
 			} else {
 				sum.update(partial, i);
 				aux = 0;

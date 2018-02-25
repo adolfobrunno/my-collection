@@ -211,7 +211,7 @@ public class MyList implements ICollection<Integer> {
 		
 		for(int i = size1-1; i >= 0; i--) {
 			
-			if(list1.get(i) > 9 || list2.get(i) > 9) {
+			if(list1.get(i) > 9 || list2.get(i) > 9 || list1.get(i) < 0 || list2.get(i) < 0) {
 				throw new IllegalArgumentException();
 			}
 			

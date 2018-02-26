@@ -1,5 +1,7 @@
 package br.ufal.abba.core;
 
+import java.util.Random;
+
 import org.junit.Test;
 
 import junit.framework.TestCase;
@@ -47,13 +49,17 @@ public class MyListTest extends TestCase{
 		MyList addFirst = MyList.asMyList(9);
 		addFirst.addFirst(1);
 		assertEquals(MyList.asMyList(1,9), addFirst);
+		
+		MyList l = new MyList();
+		assertFalse(l.add(5, 5));
+		
 	}
 	
 	@Test
 	public void testRemove() {
 		
 		MyList list = MyList.asMyList(1,2,3,4);
-		list.remove(0);
+		list.removeAt(0);
 		assertEquals(3, list.size());
 		assertEquals(2, (int) list.get(0));
 		
@@ -66,6 +72,11 @@ public class MyListTest extends TestCase{
 		list3.removeFirst();
 		assertEquals(3, list3.size());
 		assertEquals(list3, MyList.asMyList(2,3,4));
+		
+		MyList list4 = MyList.asMyList(1,2,3,4);
+		list4.remove(1);
+		assertEquals(3, list4.size());
+		assertEquals(list4, MyList.asMyList(2,3,4));
 		
 	}
 	
@@ -82,6 +93,27 @@ public class MyListTest extends TestCase{
 		MyList list3 = MyList.asMyList(1,3,2,4);
 		list3.sort();
 		assertEquals(MyList.asMyList(1,2,3,4), list3);
+	}
+
+	@Test(timeout=1000)
+	public void testSortTimeout() {
+		
+		int size = 100;
+		MyList list = new MyList(size);
+		
+		Random random = new Random();
+		
+		for(int i=0; i<size; i++) {
+			list.add(random.nextInt());
+		}
+		
+		list.sort();
+		
+		for(int i=0; i<list.size()-1; i++) {
+			assertTrue(list.get(i) <= list.get(i+1));
+		}
+		
+		System.out.println(list);
 	}
 	
 	@Test(timeout=1000)

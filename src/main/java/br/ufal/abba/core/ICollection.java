@@ -4,7 +4,7 @@ public interface ICollection<T> {
 
 	boolean add(T t);
 	boolean add(int index, T t);
-	boolean remove(int i);
+	boolean removeAt(int i);
 	boolean remove(T value);
 	boolean addFirst(T t);
 	boolean addLast(T t);

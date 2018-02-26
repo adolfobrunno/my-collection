@@ -18,11 +18,11 @@ public class MyList implements ICollection<Integer> {
 
 	MyList(String number) {
 		array = new Integer[number.length()];
-		for(int i = 0; i < number.length(); i++) {
-			array[i] = Integer.valueOf(number.charAt(i)-'0');
+		for (int i = 0; i < number.length(); i++) {
+			array[i] = Integer.valueOf(number.charAt(i) - '0');
 		}
 	}
-	
+
 	public static MyList asMyList(Integer... i) {
 		MyList list = new MyList(i.length);
 		list.array = i;
@@ -33,6 +33,9 @@ public class MyList implements ICollection<Integer> {
 		return array.length;
 	}
 
+	/**
+	 * Add t to the end of list. Return true if possible if size changed
+	 */
 	public boolean add(Integer t) {
 
 		for (int j = 0; j < this.size(); j++) {
@@ -53,9 +56,13 @@ public class MyList implements ICollection<Integer> {
 		tempArray[newSize - 1] = t;
 		array = tempArray;
 
-		return true;
+		return currentSize != size();
 	}
 
+	/**
+	 * Add t into position index Return true if possible, throws IndexOutOfBound
+	 * otherwise
+	 */
 	public boolean add(int index, Integer t) {
 
 		if (index >= size())
@@ -79,6 +86,10 @@ public class MyList implements ICollection<Integer> {
 		return true;
 	}
 
+	/**
+	 * @param index
+	 * @return element at index position
+	 */
 	public Integer get(int index) {
 		if (index >= 0 && index < size()) {
 			return array[index];
@@ -87,16 +98,22 @@ public class MyList implements ICollection<Integer> {
 		}
 	}
 
+	/**
+	 * Remove the first occurrence of value. Return true if can, false otherwise
+	 */
 	public boolean remove(Integer value) {
 		for (int i = 0; i < size(); i++) {
 			if (array[i] == value) {
-				return this.remove(i);
+				return this.removeAt(i);
 			}
 		}
 		return false;
 	}
 
-	public boolean remove(int index) {
+	/**
+	 * Remove element at index Return true if can, false otherwise
+	 */
+	public boolean removeAt(int index) {
 
 		if (index < 0 || index >= size())
 			throw new IndexOutOfBoundsException();
@@ -124,40 +141,53 @@ public class MyList implements ICollection<Integer> {
 	}
 
 	public boolean removeFirst() {
-		return this.remove(0);
+		return this.removeAt(0);
 	}
 
 	public boolean removeLast() {
-		return this.remove(size() - 1);
+		return this.removeAt(size() - 1);
 	}
 
+	/**
+	 * Sort the list. Implements QuickSort
+	 */
 	public void sort() {
+		quickSort(0, size()-1);
+	}
 
-		int i = 0;
-		int j = size() - 1;
-		int aux;
-		int center = array[(i + j) / 2];
+	private void quickSort(int begin, int end) {
+		if (begin < end) {
+			int middle = findMiddle(begin, end);
+			quickSort(begin, middle - 1);
+			quickSort(middle + 1, end);
+		}
+	}
 
-		while (i < j) {
-
-			while (array[i] < center) {
+	private int findMiddle(int begin, int end) {
+		int middle = array[begin];
+		int i = begin + 1; 
+		int f = end;
+		while (i <= f) {
+			if (array[i] <= middle)
 				i++;
-			}
-			while (array[j] > center) {
-				j--;
-			}
-
-			if (i < j) {
-				aux = array[i];
-				array[i] = array[j];
-				array[j] = aux;
+			else if (middle < array[f])
+				f--;
+			else {
+				int tmp = array[i];
+				array[i] = array[f];
+				array[f] = tmp;
 				i++;
-				j--;
+				f--;
 			}
 		}
-
+		array[begin] = array[f];
+		array[f] = middle;
+		return f;
 	}
 
+	/**
+	 * Find the t and return the index, -1 otherwise
+	 */
 	public int search(Integer t) {
 
 		for (int i = 0; i < size(); i++) {
@@ -169,6 +199,10 @@ public class MyList implements ICollection<Integer> {
 		return -1;
 	}
 
+	/**
+	 * Change value on index with t. Throws IndexOutOfBoundException if index is
+	 * invalid
+	 */
 	public boolean update(Integer t, int index) {
 
 		if (index < 0 || index >= size())
@@ -179,6 +213,9 @@ public class MyList implements ICollection<Integer> {
 		return true;
 	}
 
+	/**
+	 * Invert the list
+	 */
 	public void invert() {
 
 		int newSize = array.length - 1;
@@ -191,46 +228,54 @@ public class MyList implements ICollection<Integer> {
 		this.array = aux;
 	}
 
+	/**
+	 * Sum two distinct lists and return a new list with the result
+	 * 
+	 * @param list1
+	 * @param list2
+	 * @return the summed list
+	 * @throws IllegalArgumentException
+	 */
 	public static ICollection<Integer> sum(MyList list1, MyList list2) throws IllegalArgumentException {
-		
+
 		int size1 = list1.size();
 		int size2 = list2.size();
-		
-		while(size1 > size2) {
+
+		while (size1 > size2) {
 			list2.addFirst(0);
 			size2 = list2.size();
 		}
-		while(size2 > size1) {
+		while (size2 > size1) {
 			list1.addFirst(0);
 			size1 = list2.size();
 		}
-		
+
 		MyList sum = new MyList(size1);
-		
+
 		int aux = 0;
-		
-		for(int i = size1-1; i >= 0; i--) {
-			
-			if(list1.get(i) > 9 || list2.get(i) > 9 || list1.get(i) < 0 || list2.get(i) < 0) {
+
+		for (int i = size1 - 1; i >= 0; i--) {
+
+			if (list1.get(i) > 9 || list2.get(i) > 9 || list1.get(i) < 0 || list2.get(i) < 0) {
 				throw new IllegalArgumentException();
 			}
-			
+
 			int partial = list1.get(i) + aux + list2.get(i);
-			
-			if(partial > 9) {
+
+			if (partial > 9) {
 				int diff = partial - 10;
 				sum.update(diff, i);
 				aux = (partial - 9);
-				if(i == 0 && aux > 0) {
+				if (i == 0 && aux > 0) {
 					sum.addFirst(aux);
 				}
 			} else {
 				sum.update(partial, i);
 				aux = 0;
 			}
-			
+
 		}
-		
+
 		return sum;
 	}
 

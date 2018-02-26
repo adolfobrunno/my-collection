@@ -134,10 +134,10 @@ public class MyListTest extends TestCase{
 //		assertEquals(MyList.asMyList(1,0), MyList.sum(list1, list2));
 //		assertEquals(new MyList("10"), MyList.sum(list1, list2));
 //		
-		MyList l = MyList.asMyList(2);
+		MyList l = MyList.asMyList(1);
 		MyList l2 = MyList.asMyList(9);
 		System.out.println(MyList.sum(l, l2));
-		assertEquals(new MyList("11"), MyList.sum(l, l2));
+		assertEquals(new MyList("10"), MyList.sum(l, l2));
 	}
 	
 }

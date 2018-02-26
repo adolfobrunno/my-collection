@@ -265,7 +265,7 @@ public class MyList implements ICollection<Integer> {
 			if (partial > 9) {
 				int diff = partial == 10 ? 1 : partial - 10;
 				aux = diff;
-				sum.update(diff, i);
+				sum.update(partial - 10, i);
 				if (i == 0 && aux > 0) {
 					sum.addFirst(aux);
 				}

@@ -124,13 +124,20 @@ public class MyListTest extends TestCase{
 		assertEquals(MyList.asMyList(20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1), list);
 	}
 	
+	@Test
 	public void testSum() {
 		
-		MyList list1 = new MyList("9");
-		MyList list2 = new MyList("1");
 		
-		assertEquals(MyList.asMyList(1,0), MyList.sum(list1, list2));
-		assertEquals(new MyList("10"), MyList.sum(list1, list2));
+//		MyList list1 = new MyList("9");
+//		MyList list2 = new MyList("1");
+//		
+//		assertEquals(MyList.asMyList(1,0), MyList.sum(list1, list2));
+//		assertEquals(new MyList("10"), MyList.sum(list1, list2));
+//		
+		MyList l = MyList.asMyList(2);
+		MyList l2 = MyList.asMyList(9);
+		System.out.println(MyList.sum(l, l2));
+		assertEquals(new MyList("11"), MyList.sum(l, l2));
 	}
 	
 }

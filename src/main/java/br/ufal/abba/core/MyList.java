@@ -263,9 +263,9 @@ public class MyList implements ICollection<Integer> {
 			int partial = list1.get(i) + aux + list2.get(i);
 
 			if (partial > 9) {
-				int diff = partial - 10;
+				int diff = partial == 10 ? 1 : partial - 10;
+				aux = diff;
 				sum.update(diff, i);
-				aux = (partial - 9);
 				if (i == 0 && aux > 0) {
 					sum.addFirst(aux);
 				}
